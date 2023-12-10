@@ -18,43 +18,93 @@
 
       <!-- ADD TASK FORM -->
       <div class="card card-body">
-        <form action="save_task.php" method="POST">
-          <div class="form-group">
-            <input type="text" name="title" class="form-control" placeholder="Task Title" autofocus>
-          </div>
-          <div class="form-group">
-            <textarea name="description" rows="2" class="form-control" placeholder="Task Description"></textarea>
-          </div>
-          <input type="submit" name="save_task" class="btn btn-success btn-block" value="Save Task">
-        </form>
+  <form action="save_faculty.php" method="POST">
+  <div 
+  class="form-group hidden"
+  style="display:none;"
+  >
+      <input name="id" class="form-control" placeholder="Nombre de la Facultad" autofocus>
+    </div> 
+  <div class="form-group">
+      <input type="text" name="nombre" class="form-control" placeholder="Nombre de la Facultad" autofocus>
+    </div>
+    <div class="form-group">
+      <input type="text" name="abrev" class="form-control" placeholder="Abreviatura" autofocus>
+    </div>
+    <div class="form-group">
+      <select name="id_area" class="form-control">
+        <option value="1">Área 1</option>
+        <option value="2">Área 2</option>
+        <option value="3">Área 3</option>
+        <!-- Puedes ajustar las opciones según los valores y nombres de tus áreas -->
+      </select>
+    </div>
+    <input type="submit" name="save_faculty" class="btn btn-success btn-block" value="Guardar Facultad">
+  </form>
+</div>
+      <!-- LA OTRA TABLA  -->
+      <div class="card card-body">
+  <form action="save_programa.php" method="POST">
+    <div class="form-group">
+      <select name="id_facultad" class="form-control">
+        <option value="1">Facultad 1</option>
+        <option value="2">Facultad 2</option>
+        <option value="3">Facultad 3</option>
+        <!-- Reemplaza los valores y nombres de las facultades según tu base de datos -->
+      </select>
+    </div>
+    <div class="form-group">
+      <input type="text" name="nombre" class="form-control" placeholder="Nombre del Programa" autofocus>
+    </div>
+    <div class="form-group">
+      <input type="text" name="cod_programa" class="form-control" placeholder="Código del Programa" autofocus>
+    </div>
+    <div class="form-group">
+      <label>Tipo:</label>
+      <select name="tipo" class="form-control">
+        <option value="1">Maestría</option>
+        <option value="2">Doctorado</option>
+        <!-- Puedes ajustar las opciones según los valores reales de tu base de datos -->
+      </select>
+    </div>
+    <input type="submit" name="save_programa" class="btn btn-success btn-block" value="Guardar Programa">
+  </form>
+  <br>
+  <form action="reporte.php" method="POST"> 
+  <div class="form-group">
+    <input type="submit" name="reporte" class="btn btn-success btn-block" value="Generar Reporte">
       </div>
+  </form>
+</div>
+<!-- CIERRE -->
+
     </div>
     <div class="col-md-8">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Created At</th>
-            <th>Action</th>
+            <th>Facultad</th>
+            <th>Abreviatura</th>
+            <th>Área</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
 
           <?php
-          $query = "SELECT * FROM task";
-          $result_tasks = mysqli_query($conn, $query);    
+          $query = "SELECT * FROM dicfacultades";
+          $result_facultades = mysqli_query($conn, $query);    
 
-          while($row = mysqli_fetch_assoc($result_tasks)) { ?>
+          while($row = mysqli_fetch_assoc($result_facultades)) { ?>
           <tr>
-            <td><?php echo $row['title']; ?></td>
-            <td><?php echo $row['description']; ?></td>
-            <td><?php echo $row['created_at']; ?></td>
+            <td><?php echo $row['Nombre']; ?></td>
+            <td><?php echo $row['Abrev']; ?></td>
+            <td><?php echo $row['IdArea']; ?></td>
             <td>
-              <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-secondary">
+              <a href="edit_faculty.php?id=<?php echo $row['Id']?>" class="btn btn-secondary">
                 <i class="fas fa-marker"></i>
               </a>
-              <a href="delete_task.php?id=<?php echo $row['id']?>" class="btn btn-danger">
+              <a href="delete_faculty.php?id=<?php echo $row['Id']?>" class="btn btn-danger">
                 <i class="far fa-trash-alt"></i>
               </a>
             </td>
@@ -62,8 +112,45 @@
           <?php } ?>
         </tbody>
       </table>
-    </div>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Facultad</th>
+            <th>Programa</th>
+            <th>Código</th>
+            <th>Tipo</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <?php
+          $query = "SELECT * FROM dicprogramas";
+          $result_programas = mysqli_query($conn, $query);    
+
+          while($row = mysqli_fetch_assoc($result_programas)) { ?>
+          <tr>
+            <td><?php echo $row['IdFacultad']; ?></td>
+            <td><?php echo $row['Nombre']; ?></td>
+            <td><?php echo $row['CodPrograma']; ?></td>
+            <td><?php echo $row['Tipo']; ?></td>
+            <td>
+              <a href="edit_programa.php?id=<?php echo $row['Id']?>" class="btn btn-secondary">
+                <i class="fas fa-marker"></i>
+              </a>
+
+              <a href="delete_programa.php?id=<?php echo $row['Id']?>" class="btn btn-danger">
+                <i class="far fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
   </div>
 </main>
 
 <?php include('includes/footer.php'); ?>
+
+

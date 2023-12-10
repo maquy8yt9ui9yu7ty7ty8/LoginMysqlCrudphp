@@ -2,7 +2,7 @@
 
 include('db.php');
 
-if (isset($_POST['save_task'])) {
+if (isset($_POST['save_faculty'])) {
   $nombre = $_POST['nombre'];
   $abrev = $_POST['abrev'];
   $idarea = $_POST['idarea'];
@@ -12,10 +12,10 @@ if (isset($_POST['save_task'])) {
     die("Query Failed.");
   }
 
-  $_SESSION['message'] = 'Task Saved Successfully';
-  $_SESSION['message_type'] = 'success';
-  header('Location: index.php');
 
+    $_SESSION['message'] = 'Facultad guardada exitosamente';
+    $_SESSION['message_type'] = 'success';
+    header('Location: index.php');
 }
 
 ?>
